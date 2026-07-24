@@ -1636,7 +1636,7 @@ typecheck_typeinfo_operands(struct workspace *wk,
 		enum complex_type ct = COMPLEX_TYPE_TYPE(a_t);
 
 		if (ct != complex_type_nested) {
-			assert(false && "unsupported complex type");
+			return false;
 		}
 
 		struct bucket_arr *typeinfo_arr = &wk->vm.objects.obj_aos[obj_typeinfo - _obj_aos_start];
