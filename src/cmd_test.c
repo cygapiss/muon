@@ -497,19 +497,17 @@ test_in_suite(struct workspace *wk, obj suites, struct run_test_ctx *run_test_ct
 		.run_test_ctx = run_test_ctx,
 	};
 
-	if (!suites) {
-		// test has no suites
-		return false;
-	}
-
 	if (!run_test_ctx->opts->suites_len) {
 		// no suites given on command line
-		if (run_test_ctx->setup.exclude_suites) {
+		if (suites && run_test_ctx->setup.exclude_suites) {
 			obj_array_foreach(wk, suites, &ctx, test_in_exclude_suites_iter);
 			return !ctx.found;
 		} else {
 			return true;
 		}
+	} else if (!suites) {
+		// suites given on command line, but test has no suites
+		return false;
 	}
 
 	obj_array_foreach(wk, suites, &ctx, test_in_suite_iter);
